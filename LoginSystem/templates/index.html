@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup & Login</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'animation.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="title-text">
+            <div class="title login">Login Form</div>
+            <div class="title signup">Signup Form</div>
+        </div>
+        <div class="form-container">
+            <div class="slide-controls">
+                <input type="radio" name="slide" id="login" checked>
+                <input type="radio" name="slide" id="signup">
+                <label for="login" class="slide login">Login</label>
+                <label for="signup" class="slide signup">Signup</label>
+                <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+                <form method="post" class="login" id="login-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="login">
+                    <div class="field">
+                        <input type="text" placeholder="Username" name="username" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" placeholder="Password" name="password" required>
+                    </div>
+                    <div class="error-message" id="login-error"></div> <!-- اضافه کردن این خط -->
+                    <div class="pass-link"><a href="#">Forgot password?</a></div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Login">
+                    </div>
+                    <div class="signup-link">Not a member? <a href="#" id="switch-to-signup">Signup now</a></div>
+                </form>
+                <form method="post" class="signup" id="signup-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="signin">
+                    <div class="field">
+                        <input type="text" placeholder="Username" name="username" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" placeholder="Password" name="password" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" placeholder="Confirm password" name="password_confirm" required>
+                    </div>
+                    <div class="error-message" id="signup-error"></div> <!-- اضافه کردن این خط -->
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Signup">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#login-form').on('submit', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "login_signup" %}',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        console.log(response);
+                        // اگر پاسخ موفقیت آمیز بود، به صفحه خانه هدایت کنید
+                        window.location.href = "{% url 'home' %}";
+                    },
+                    error: function (response) {
+                        console.log('Error:', response);
+                        $('#login-error').text(response.responseJSON.error); // نمایش ارور در HTML
+                    }
+                });
+            });
+
+            $('#signup-form').on('submit', function (event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "login_signup" %}',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        console.log(response);
+                        // اگر پاسخ موفقیت آمیز بود، به صفحه خانه هدایت کنید
+                        window.location.href = "{% url 'home' %}";
+                    },
+                    error: function (response) {
+                        console.log('Error:', response);
+                        $('#signup-error').text(response.responseJSON.error); // نمایش ارور در HTML
+                    }
+                });
+            });
+
+            $('#switch-to-signup').click(function () {
+                $('#signup').prop('checked', true);
+            });
+        });
+    </script>
+</body>
+
+</html>
