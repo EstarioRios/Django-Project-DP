@@ -19,7 +19,7 @@ def view_login_signin_page(request):
 
         else:
             messages.error(request, "Invalid form type.")
-            return redirect("index")
+            return render(request, "index.html")
 
     else:
         messages.error(request, "Method of Request is not POST.")
