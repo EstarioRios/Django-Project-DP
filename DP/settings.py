@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "Content",
     "Home",
     "LoginSystem",
+    "Dashboard",
 ]
 
 MIDDLEWARE = [

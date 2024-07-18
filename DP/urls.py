@@ -19,9 +19,11 @@ from django.contrib import admin
 from django.urls import path
 from LoginSystem.views import view_login_signin_page as VLSP
 from Home.views import view_home_page as VHP
+from Dashboard.views import view_dashboard as VD
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", VHP, name="home"),
     path("login/", VLSP, name="login_signup"),
+    path("dashboard/", VD, name="dashboard"),
 ]

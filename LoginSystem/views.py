@@ -36,7 +36,7 @@ def login_process(request):
 
     if user is not None:
         auth_login(request, user)
-        return redirect("home")
+        return redirect("dashboard")
 
     else:
         return JsonResponse({"error": "Invalid username or password."}, status=400)
