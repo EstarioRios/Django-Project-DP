@@ -84,6 +84,7 @@ class CustomUserManager(BaseUserManager):
             lastname=lastname,
             store_name=store_name,
             store_description=store_description,
+            **extra_fields,
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -120,6 +121,7 @@ class CustomUserManager(BaseUserManager):
             type_user=type_user,
             firstname=firstname,
             lastname=lastname,
+            **extra_fields,
         )
         user.set_password(password)
         user.save(using=self._db)
